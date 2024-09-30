@@ -10,6 +10,17 @@ const PORT = 8001;
 app.use(cors());
 app.use(bodyParser.json());
 
+const corsOptions = {
+  origin: 'https://llm.9seebird.site ', // 클라이언트의 주소를 명시
+  credentials: true, // 자격 증명 허용
+};
+
+app.use(cors(corsOptions));
+
+app.get('/', (req, res) => {
+  res.send('Hello World! youtube-back'); // get 요청 시 Hello World! 출력
+});
+
 app.post('/search', (req, res) => {
   const artistName = req.body.artist;
 
