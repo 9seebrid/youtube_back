@@ -1,0 +1,8 @@
+# misc
+.env
+.env.local
+/lib
+/bin
+pyvenv.cfg
+node_modules
+venv
