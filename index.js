@@ -3,22 +3,26 @@ const cors = require('cors');
 const { spawn } = require('child_process');
 const bodyParser = require('body-parser');
 const path = require('path');
-
+const dotenv = require('dotenv');
 const app = express();
-const PORT = 8001;
 
-app.use(cors());
+dotenv.config();
+
+const PORT = process.env.PORT || 8002; // 환경변수 PORT 사용
+const API_URL = process.env.API_URL; // API_URL 환경변수 사용
+
+app.use(
+  cors({
+    origin: API_URL, // 환경 변수로부터 API URL을 가져옴
+    credentials: true,
+  })
+);
+
+app.use(express.json());
 app.use(bodyParser.json());
 
-const corsOptions = {
-  origin: 'https://llm.9seebird.site ', // 클라이언트의 주소를 명시
-  credentials: true, // 자격 증명 허용
-};
-
-app.use(cors(corsOptions));
-
 app.get('/', (req, res) => {
-  res.send('Hello World! youtube-back'); // get 요청 시 Hello World! 출력
+  res.send('youtube-back'); // get 요청 시 Hello World! 출력
 });
 
 app.post('/search', (req, res) => {
@@ -47,5 +51,4 @@ app.post('/search', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-  console.log(__dirname);
 });
